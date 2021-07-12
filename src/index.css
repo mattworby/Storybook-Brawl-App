@@ -80,3 +80,46 @@ body {
 .numberSpan:hover > .levelButton{
   background-image:url("assets/WoodButton_Hover.png")
 }
+
+
+.numberSpan .tooltip {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+#level2Tooltip{
+  position:absolute;
+  left:15px;
+  top:20px;
+}
+#level3Tooltip{
+  position:absolute;
+  left:15px;
+  top:95px;
+}
+#level4Tooltip{
+  position:absolute;
+  left:15px;
+  top:170px;
+}
+#level5Tooltip{
+  position:absolute;
+  left:15px;
+  top:245px;
+}
+#level6Tooltip{
+  position:absolute;
+  left:15px;
+  top:320px;
+}
+#level7Tooltip{
+  position:absolute;
+  left:15px;
+  top:395px;
+}

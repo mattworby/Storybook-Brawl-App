@@ -1,5 +1,6 @@
 const { app, BrowserWindow, screen } = require('electron');
 const path = require('path');
+const {ipcMain} = require('electron')
 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -15,11 +16,9 @@ const createWindow = () => {
   });
 
   let boundsX;
-  let boundsY;
 
   if (externalDisplay) {
     boundsX = externalDisplay.bounds.x;
-    boundsY = externalDisplay.bounds.height;
   }
 
   // Create the browser window.
@@ -61,6 +60,31 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+ipcMain.on('resize-window', (event) => {
+
+  const displays = screen.getAllDisplays()
+  const externalDisplay = displays.find((display) => {
+    return display.bounds.x !== 0 || display.bounds.y !== 0
+  });
+
+    let browserWindow = BrowserWindow.fromWebContents(event.sender);
+    let boundsX;
+    let width;
+
+    if (externalDisplay) {
+      boundsX = externalDisplay.bounds.x;
+    }
+
+    if (browserWindow.getBounds().width < 100){
+      width = 1274;
+    } else {
+      width = 75;
+    }
+
+    browserWindow.setBounds({x: (boundsX - width - 25),y:browserWindow.getBounds().y, width:width, height:504});
+
+})
 
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
