@@ -1,0 +1,82 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+#cardArea{
+  width:75px;
+  height:450px;
+  position:fixed;
+  right:0px;
+  bottom:0px;
+}
+
+.levelButton{
+  width:75px;
+  height:75px;
+  background-image: url("assets/WoodButton_Empty.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#level2Number{
+  position:absolute;
+  left:27px;
+  top:20px;
+  width:35px;
+  height:35px;
+  background-image:url("assets/number2.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+#level3Number{
+  position:absolute;
+  left:27px;
+  top:95px;
+  width:35px;
+  height:35px;
+  background-image:url("assets/number3.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+#level4Number{
+  position:absolute;
+  left:27px;
+  top:170px;
+  width:35px;
+  height:35px;
+  background-image:url("assets/number4.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+#level5Number{
+  position:absolute;
+  left:27px;
+  top:245px;
+  width:35px;
+  height:35px;
+  background-image:url("assets/number5.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+#level6Number{
+  position:absolute;
+  left:27px;
+  top:320px;
+  width:35px;
+  height:35px;
+  background-image:url("assets/number6.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+#level7Number{
+  position:absolute;
+  left:27px;
+  top:395px;
+  width:35px;
+  height:35px;
+  background-image:url("assets/number7.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.numberSpan:hover > .levelButton{
+  background-image:url("assets/WoodButton_Hover.png")
+}
