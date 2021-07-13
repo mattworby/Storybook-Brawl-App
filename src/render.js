@@ -124,7 +124,7 @@ function changeWindow(id) {
 
     if (document.getElementById(`level${id}Tooltip`).style.visibility === 'visible'){
         for (let i = 2; i < 8; i++){
-            if(i == id){
+            if(i != id){
                 document.getElementById(`${i}`).setAttribute("onclick","changeWindow(this.id)");
             }
         }
@@ -133,7 +133,7 @@ function changeWindow(id) {
         document.getElementById(`level${id}Tooltip`).style.opacity = "1";
     } else if (document.getElementById(`level${id}Tooltip`).style.visibility === 'hidden' || document.getElementById(`level${id}Tooltip`).style.visibility === ''){
         for (let i = 2; i < 8; i++){
-            if(i == id){
+            if(i != id){
                 document.getElementById(`${i}`).setAttribute("onclick","");
             }
         }
