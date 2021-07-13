@@ -50,6 +50,7 @@ function generateChild(iterator, cost){
     node.style.margin = '5px auto';
     node.id = jsonOut[iterator].Name;
     node.innerHTML = jsonOut[iterator].Name;
+    node.style.display = 'none';
 
     if (typeof(element) == 'undefined' || element == null){
         let cardCat = document.createElement("div");                  
@@ -61,10 +62,13 @@ function generateChild(iterator, cost){
         cardType.style.border = '1px solid white';
         cardType.style.margin = '5px auto';
         cardType.innerHTML = jsonOut[iterator]['Card Type'];
+        cardType.id = `level${cost}${jsonOut[iterator]['Card Type']}`;
+        cardType.setAttribute("onclick",`makeTypeVisible("${node.id}",this.id)`);
 
         document.getElementById(idName).appendChild(cardType);
     }
-    document.getElementById(idName).appendChild(node);
+    
+    document.getElementById(`level${cost}${jsonOut[iterator]['Card Type']}`).appendChild(node);
 
     createInnerNode(iterator, node.id);
 }
@@ -101,13 +105,39 @@ function makeVisible(id, vis){
     
 }
 
+function makeTypeVisible(typeNodeId,parentId){
+    const parent = document.getElementById(parentId).childNodes;
+
+    for(let i = 0; i < parent.length; i++){
+        if (parent[i].id != undefined){
+            if (document.getElementById(parent[i].id).style.display == 'block'){
+                document.getElementById(parent[i].id).style.display = 'none';
+            } else {
+                document.getElementById(parent[i].id).style.display = 'block';
+            }
+        }
+    }
+}
+
 function changeWindow(id) {
     ipcRenderer.send('resize-window');
 
     if (document.getElementById(`level${id}Tooltip`).style.visibility === 'visible'){
+        for (let i = 2; i < 8; i++){
+            if(i == id){
+                document.getElementById(`${i}`).setAttribute("onclick","changeWindow(this.id)");
+            }
+        }
+
         document.getElementById(`level${id}Tooltip`).style.visibility = "hidden";
         document.getElementById(`level${id}Tooltip`).style.opacity = "1";
     } else if (document.getElementById(`level${id}Tooltip`).style.visibility === 'hidden' || document.getElementById(`level${id}Tooltip`).style.visibility === ''){
+        for (let i = 2; i < 8; i++){
+            if(i == id){
+                document.getElementById(`${i}`).setAttribute("onclick","");
+            }
+        }
+
         document.getElementById(`level${id}Tooltip`).style.visibility = "visible";
         document.getElementById(`level${id}Tooltip`).style.opacity = "1";
     }
