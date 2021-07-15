@@ -1,9 +1,11 @@
 const request = require("requests");
 const {ipcRenderer} = require('electron');
+const fs = require('fs');
 
 let url = "http://badguyty.com/images/sbb/sbb-cards.json";
 let jsonOut;
 
+//grab json data
 request(url,true).on('data', function (chunk) {
     jsonOut = JSON.parse(chunk);
 
@@ -37,6 +39,7 @@ request(url,true).on('data', function (chunk) {
     if (err) return console.log('connection closed due to errors', err);
 });
 
+//sort cards into categories
 function generateChild(iterator, cost){
     let element = document.getElementById(`level${cost}${jsonOut[iterator]['Card Type']}Category`);
     let idName = `level${cost}${jsonOut[iterator]['Card Type']}Category`;
@@ -73,6 +76,7 @@ function generateChild(iterator, cost){
     createInnerNode(iterator, node.id);
 }
 
+//further breakdown
 function createInnerNode(innerIt, parentID){
     let innerNode;
 
@@ -120,7 +124,7 @@ function makeTypeVisible(typeNodeId,parentId){
 }
 
 function changeWindow(id) {
-    ipcRenderer.send('resize-window');
+    //ipcRenderer.send('resize-window');
 
     if (document.getElementById(`level${id}Tooltip`).style.visibility === 'visible'){
         for (let i = 2; i < 8; i++){
@@ -142,3 +146,78 @@ function changeWindow(id) {
         document.getElementById(`level${id}Tooltip`).style.opacity = "1";
     }
 }
+
+//read in files from
+fs.readFile('./notes/Player.log', 'utf8', (err, data) =>{
+    let playerArr;
+    let players = [
+        {"player": "2", "id": "", "hero": "", "cards":{"1":"","2":"","3":"","4":"","5":"","6":"","7":""}},
+        {"player": "3", "id": "", "hero": "", "cards":{"1":"","2":"","3":"","4":"","5":"","6":"","7":""}},
+        {"player": "4", "id": "", "hero": "", "cards":{"1":"","2":"","3":"","4":"","5":"","6":"","7":""}},
+        {"player": "5", "id": "", "hero": "", "cards":{"1":"","2":"","3":"","4":"","5":"","6":"","7":""}},
+        {"player": "6", "id": "", "hero": "", "cards":{"1":"","2":"","3":"","4":"","5":"","6":"","7":""}},
+        {"player": "7", "id": "", "hero": "", "cards":{"1":"","2":"","3":"","4":"","5":"","6":"","7":""}},
+        {"player": "8", "id": "", "hero": "", "cards":{"1":"","2":"","3":"","4":"","5":"","6":"","7":""}}
+    ];
+    
+    if(err){
+        console.log(err);
+        return;
+    }
+
+    playerArr = data.split(/\r?\n/);
+
+    for(let i = playerArr.length - 1; i >= 0; i--){
+        if((playerArr[i].includes('---- NEW GAME STARTED --------'))){
+            playerArr.splice(0,i);
+            break;
+        }
+    }
+
+    //generate other players
+   for(let i = 0; i < playerArr.length; i++){
+        if((playerArr[i].includes('ActionEnterBrawlPhase'))){
+            let newPlayer = playerArr[i].slice(playerArr[i].indexOf('SecondPlayerId: ') + 'SecondPlayerId: '.length,playerArr[i].length).trim(); //get other player id
+
+            for(let j = 0; j < players.length; j++){
+                if(players[j].id === ""){ 
+                    players[j].id = newPlayer;
+                    break;
+                }
+            }
+        } else if((playerArr[i].includes('ActionCreateCard'))){
+
+            //if action create card not original player
+            let preIndex = playerArr[i].indexOf('PlayerId: ');
+            let searchIndex = preIndex + playerArr[i].substring(preIndex).indexOf('|');
+            let insert = playerArr[i].slice(preIndex + 'PlayerId: '.length,searchIndex).trim();
+
+            //loop through other players hero and creatures and set their current values to the creatures
+            for(let j = 0; j < player.length; j++){
+                if(insert === players[j].id){
+                    //hero or creature sets
+                    preIndex = playerArr[i].indexOf('DisplayName: ');
+                    searchIndex = preIndex + playerArr[i].substring(preIndex).indexOf('|');
+                    insert = playerArr[i].slice(preIndex + 'PlayerId: '.length,searchIndex).trim();
+
+                    if(players[j].hero === ""){
+                        //if hero
+                        for(let k = 0; k < hero.length; k++){
+                            if(insert === hero[i]){
+                                players[j].hero = insert;
+                            }
+                        }
+                    } else {
+                        //else if creature
+                        for(let k = 0; k < creature.length; k++){
+                            if(insert === creature[i]){
+                                players[j].card = insert;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+});
