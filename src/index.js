@@ -32,7 +32,7 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      devTools: true
+      devTools: false
     },
     resizable: false,
     show:true
@@ -45,8 +45,6 @@ const createWindow = () => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
-
-  mainWindow.maximize();
 };
 
 // This method will be called when Electron has finished
