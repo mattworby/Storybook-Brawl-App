@@ -1,5 +1,6 @@
 const request = require("requests");
 const {ipcRenderer} = require('electron');
+const profile = process.env.USERPROFILE;
 const fs = require('fs');
 
 let url = "http://badguyty.com/images/sbb/sbb-cards.json";
@@ -43,9 +44,6 @@ request(url,true).on('data', function (chunk) {
                 break;
         }
     };
-
-    //initialize read
-    readFileIn();
 
 }).on('end', function (err) {
     if (err) return console.log('connection closed due to errors', err);
@@ -135,36 +133,11 @@ function makeTypeVisible(typeNodeId,parentId){
     }
 }
 
-function changeWindow(id) {
-    //ipcRenderer.send('resize-window');
-
-    if (document.getElementById(`level${id}Tooltip`).style.visibility === 'visible'){
-        for (let i = 2; i < 8; i++){
-            if(i != id){
-                document.getElementById(`${i}`).setAttribute("onclick","changeWindow(this.id)");
-            }
-        }
-
-        document.getElementById(`level${id}Tooltip`).style.visibility = "hidden";
-        document.getElementById(`level${id}Tooltip`).style.opacity = "1";
-    } else if (document.getElementById(`level${id}Tooltip`).style.visibility === 'hidden' || document.getElementById(`level${id}Tooltip`).style.visibility === ''){
-        for (let i = 2; i < 8; i++){
-            if(i != id){
-                document.getElementById(`${i}`).setAttribute("onclick","");
-            }
-        }
-
-        document.getElementById(`level${id}Tooltip`).style.visibility = "visible";
-        document.getElementById(`level${id}Tooltip`).style.opacity = "1";
-    }
-}
-
 //read in files from
-function readFileIn(){
-    fs.readFile('./notes/Player.log', 'utf8', (err, data) =>{
-        let playerArr;
-        let BreakException = {};
-        let players = [
+function readFileIn(callback){
+    let playerArr;
+    let BreakException = {};
+    let players = [
             {"player": "1", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
             {"player": "2", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
             {"player": "3", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
@@ -173,7 +146,9 @@ function readFileIn(){
             {"player": "6", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
             {"player": "7", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
             {"player": "8", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
-        ];
+    ];
+
+    fs.readFile(`${profile}\\AppData\\LocalLow\\Good Luck Games\\Storybook Brawl\\Player.log`, 'utf8', (err, data) =>{
         
         if(err){
             console.log(err);
@@ -191,8 +166,12 @@ function readFileIn(){
     
         //generate other players
        for(let i = 0; i < playerArr.length; i++){
-            if((playerArr[i].includes('ActionEnterBrawlPhase'))){
+            if((playerArr[i].includes('ActionEnterBrawlPhase'))){                
                 let newPlayer = playerArr[i].slice(playerArr[i].indexOf('SecondPlayerId: ') + 'SecondPlayerId: '.length,playerArr[i].length).trim(); //get other player id
+
+                if (newPlayer.length < 36){
+                    newPlayer = playerArr[i].slice(playerArr[i].indexOf('FirstPlayerId: ') + 'FirstPlayerId: '.length,playerArr[i].indexOf(' | SecondPlayerId: ')).trim(); //get other player id
+                }
     
                 for(let j = 0; j < players.length; j++){
                     if(players[j].id === ""){ 
@@ -251,6 +230,102 @@ function readFileIn(){
                 }
             }
         }
-        console.log(JSON.stringify(players));
     });
+    return callback(players);
+}
+
+function changeWindow(id) {
+    ipcRenderer.send('resize-window');
+
+    if (document.getElementById(`level${id}Tooltip`).style.visibility === 'visible'){
+        for (let i = 2; i < 8; i++){
+            if(i != id){
+                document.getElementById(`${i}`).setAttribute("onclick","changeWindow(this.id)");
+            }
+        }
+
+        document.getElementById(`pBrawlButton`).setAttribute("onclick","changePBrawl()");
+
+        document.getElementById(`level${id}Tooltip`).style.visibility = "hidden";
+        document.getElementById(`level${id}Tooltip`).style.opacity = "1";
+    } else if (document.getElementById(`level${id}Tooltip`).style.visibility === 'hidden' || document.getElementById(`level${id}Tooltip`).style.visibility === ''){
+        for (let i = 2; i < 8; i++){
+            if(i != id){
+                document.getElementById(`${i}`).setAttribute("onclick","");
+            }
+        }
+
+        document.getElementById(`pBrawlButton`).setAttribute("onclick","");
+
+        document.getElementById(`level${id}Tooltip`).style.visibility = "visible";
+        document.getElementById(`level${id}Tooltip`).style.opacity = "1";
+    }
+}
+
+async function changePBrawl(){
+
+    ipcRenderer.send('resize-window');
+
+    if (document.getElementById(`pBrawlTooltip`).style.visibility === 'visible'){
+        for (let i = 2; i < 8; i++){
+            document.getElementById(`${i}`).setAttribute("onclick","changeWindow(this.id)");
+        }
+
+        document.getElementById(`pBrawlTooltip`).style.visibility = "hidden";
+        document.getElementById(`pBrawlTooltip`).style.opacity = "1";
+    } else if (document.getElementById(`pBrawlTooltip`).style.visibility === 'hidden' || document.getElementById(`pBrawlTooltip`).style.visibility === ''){
+        let result;
+
+        let promise = new Promise((resolve,reject) =>{
+		    readFileIn(function(r){
+			    setTimeout(() => resolve(r), 10);
+		    });
+	    });
+
+        result = await promise;
+
+        removeAllChildNodes(document.getElementById("pBrawlTooltip"));
+
+        for(let i = 0; i < result.length; i++){
+            if(result[i].hero.img != ""){
+                generateBrawlDiv(i, result);
+            }
+        }
+        
+        
+        
+        for (let i = 2; i < 8; i++){
+            document.getElementById(`${i}`).setAttribute("onclick","");
+        }
+
+        document.getElementById(`pBrawlTooltip`).style.visibility = "visible";
+        document.getElementById(`pBrawlTooltip`).style.opacity = "1";
+    }
+}
+
+function generateBrawlDiv(iterator,jsonData){
+    let idName = `brawl${jsonData[iterator].player}`;
+    let node;
+
+    //generate node
+    node = document.createElement("div");
+    node.style.height = '100%';
+    node.id = idName;
+    
+    document.getElementById(`pBrawlTooltip`).appendChild(node);
+
+    document.getElementById(idName).style.backgroundImage = `url("${jsonData[iterator].hero.img}")`;
+    document.getElementById(idName).style.flex = "auto";
+    document.getElementById(idName).style.backgroundRepeat = "no-repeat";
+    document.getElementById(idName).style.backgroundSize = "contain";
+
+    console.log(document.getElementById(idName).style.backgroundImage);
+
+    //createInnerNode(iterator, node.id);
+}
+
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
 }

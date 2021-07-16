@@ -16,17 +16,19 @@ const createWindow = () => {
   });
 
   let boundsX;
+  let height;
 
   if (externalDisplay) {
     boundsX = externalDisplay.bounds.x;
+    height = externalDisplay.bounds.height;
   }
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width:75,
-    height:500,
-    x: boundsX - 100,
-    y: 150,
+    width:200,
+    height:height - (height - Math.floor(height * .80)),
+    x: boundsX - 200,
+    y: (height - Math.floor(height * .80)),
     transparent:true,
     frame: false,
     webPreferences: {
@@ -71,18 +73,20 @@ ipcMain.on('resize-window', (event) => {
     let browserWindow = BrowserWindow.fromWebContents(event.sender);
     let boundsX;
     let width;
+    let height;
 
     if (externalDisplay) {
       boundsX = externalDisplay.bounds.x;
+      height = externalDisplay.bounds.height;
     }
 
-    if (browserWindow.getBounds().width < 100){
+    if (browserWindow.getBounds().width < 250){
       width = 1274;
     } else {
-      width = 75;
+      width = 200;
     }
 
-    browserWindow.setBounds({x: (boundsX - width - 25),y:browserWindow.getBounds().y, width:width, height:504});
+    browserWindow.setBounds({x: (boundsX - width - 25),y:(height - Math.floor(height * .80)), width:width, height:height - (height - Math.floor(height * .80))});
 
 })
 
