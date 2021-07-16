@@ -199,6 +199,11 @@ function readFileIn(){
                         players[j].id = newPlayer;
                         break;
                     }
+                    if(players[j].id === newPlayer){
+                        players[j].hero = {"name":"","img":""};
+                        players[j].cards = {"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}};
+                        break;
+                    }
                 }
             } else if((playerArr[i].includes('ActionCreateCard'))){
     
