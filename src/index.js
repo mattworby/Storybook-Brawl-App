@@ -81,12 +81,12 @@ ipcMain.on('resize-window', (event) => {
     }
 
     if (browserWindow.getBounds().width < 250){
-      width = 1274;
+      width = 1250;
     } else {
-      width = 200;
+      width = 201;
     }
 
-    browserWindow.setBounds({x: (boundsX - width - 25),y:(height - Math.floor(height * .80)), width:width, height:height - (height - Math.floor(height * .80))});
+    browserWindow.setBounds({x: (boundsX - width),y:(height - Math.floor(height * .80)), width:width, height:height - (height - Math.floor(height * .80))});
 
 })
 

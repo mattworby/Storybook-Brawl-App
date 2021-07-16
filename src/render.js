@@ -138,14 +138,13 @@ function readFileIn(callback){
     let playerArr;
     let BreakException = {};
     let players = [
-            {"player": "1", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
-            {"player": "2", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
-            {"player": "3", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
-            {"player": "4", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
-            {"player": "5", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
-            {"player": "6", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
-            {"player": "7", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
-            {"player": "8", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}}},
+            {"player": "1", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":"","zone":"","slot":""},"two":{"name":"","img":"","zone":"","slot":""},"three":{"name":"","img":"","zone":"","slot":""},"four":{"name":"","img":"","zone":"","slot":""},"five":{"name":"","img":"","zone":"","slot":""},"six":{"name":"","img":"","zone":"","slot":""},"seven":{"name":"","img":"","zone":"","slot":""}}},
+            {"player": "2", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":"","zone":"","slot":""},"two":{"name":"","img":"","zone":"","slot":""},"three":{"name":"","img":"","zone":"","slot":""},"four":{"name":"","img":"","zone":"","slot":""},"five":{"name":"","img":"","zone":"","slot":""},"six":{"name":"","img":"","zone":"","slot":""},"seven":{"name":"","img":"","zone":"","slot":""}}},
+            {"player": "3", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":"","zone":"","slot":""},"two":{"name":"","img":"","zone":"","slot":""},"three":{"name":"","img":"","zone":"","slot":""},"four":{"name":"","img":"","zone":"","slot":""},"five":{"name":"","img":"","zone":"","slot":""},"six":{"name":"","img":"","zone":"","slot":""},"seven":{"name":"","img":"","zone":"","slot":""}}},
+            {"player": "4", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":"","zone":"","slot":""},"two":{"name":"","img":"","zone":"","slot":""},"three":{"name":"","img":"","zone":"","slot":""},"four":{"name":"","img":"","zone":"","slot":""},"five":{"name":"","img":"","zone":"","slot":""},"six":{"name":"","img":"","zone":"","slot":""},"seven":{"name":"","img":"","zone":"","slot":""}}},
+            {"player": "5", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":"","zone":"","slot":""},"two":{"name":"","img":"","zone":"","slot":""},"three":{"name":"","img":"","zone":"","slot":""},"four":{"name":"","img":"","zone":"","slot":""},"five":{"name":"","img":"","zone":"","slot":""},"six":{"name":"","img":"","zone":"","slot":""},"seven":{"name":"","img":"","zone":"","slot":""}}},
+            {"player": "6", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":"","zone":"","slot":""},"two":{"name":"","img":"","zone":"","slot":""},"three":{"name":"","img":"","zone":"","slot":""},"four":{"name":"","img":"","zone":"","slot":""},"five":{"name":"","img":"","zone":"","slot":""},"six":{"name":"","img":"","zone":"","slot":""},"seven":{"name":"","img":"","zone":"","slot":""}}},
+            {"player": "7", "id": "", "hero":{"name":"","img":""}, "cards":{"one":{"name":"","img":"","zone":"","slot":""},"two":{"name":"","img":"","zone":"","slot":""},"three":{"name":"","img":"","zone":"","slot":""},"four":{"name":"","img":"","zone":"","slot":""},"five":{"name":"","img":"","zone":"","slot":""},"six":{"name":"","img":"","zone":"","slot":""},"seven":{"name":"","img":"","zone":"","slot":""}}},
     ];
 
     fs.readFile(`${profile}\\AppData\\LocalLow\\Good Luck Games\\Storybook Brawl\\Player.log`, 'utf8', (err, data) =>{
@@ -180,7 +179,7 @@ function readFileIn(callback){
                     }
                     if(players[j].id === newPlayer){
                         players[j].hero = {"name":"","img":""};
-                        players[j].cards = {"one":{"name":"","img":""},"two":{"name":"","img":""},"three":{"name":"","img":""},"four":{"name":"","img":""},"five":"","six":{"name":"","img":""},"seven":{"name":"","img":""}};
+                        players[j].cards = {"one":{"name":"","img":"","zone":"","slot":""},"two":{"name":"","img":"","zone":"","slot":""},"three":{"name":"","img":"","zone":"","slot":""},"four":{"name":"","img":"","zone":"","slot":""},"five":{"name":"","img":"","zone":"","slot":""},"six":{"name":"","img":"","zone":"","slot":""},"seven":{"name":"","img":"","zone":"","slot":""}};
                         break;
                     }
                 }
@@ -190,6 +189,14 @@ function readFileIn(callback){
                 let preIndex = playerArr[i].indexOf('PlayerId: ');
                 let searchIndex = preIndex + playerArr[i].substring(preIndex).indexOf('|');
                 let insert = playerArr[i].slice(preIndex + 'PlayerId: '.length,searchIndex).trim();
+
+                preIndex = playerArr[i].indexOf('Zone: ');
+                searchIndex = preIndex + playerArr[i].substring(preIndex).indexOf('|');
+                let zone = playerArr[i].slice(preIndex + 'Zone: '.length,searchIndex).trim();
+
+                preIndex = playerArr[i].indexOf('Slot: ');
+                searchIndex = preIndex + playerArr[i].substring(preIndex).indexOf('|');
+                let slot = playerArr[i].slice(preIndex + 'Slot: '.length,searchIndex).trim();
     
                 //loop through other players hero and creatures and set their current values to the creatures
                 for(let j = 0; j < players.length; j++){
@@ -214,9 +221,13 @@ function readFileIn(callback){
                                     try{
                                         Object.keys(players[j].cards).forEach(function(key){
                                             if(players[j].cards[key].name === ""){
-                                                players[j].cards[key].name = insert;
-                                                players[j].cards[key].img = creature[k][1];
-                                                throw BreakException;
+                                                if(zone === "Character"){
+                                                    players[j].cards[key].name = insert;
+                                                    players[j].cards[key].img = creature[k][1];
+                                                    players[j].cards[key].zone = zone;
+                                                    players[j].cards[key].slot = slot;
+                                                    throw BreakException;
+                                                }
                                             }
                                         });
                                     } catch (e){
@@ -319,9 +330,35 @@ function generateBrawlDiv(iterator,jsonData){
     document.getElementById(idName).style.backgroundRepeat = "no-repeat";
     document.getElementById(idName).style.backgroundSize = "contain";
 
-    console.log(document.getElementById(idName).style.backgroundImage);
+    document.getElementById(idName).setAttribute("onmouseover",`openBoard(${JSON.stringify(jsonData[iterator].cards)})`);
+    document.getElementById(idName).setAttribute("onmouseout","closeBoard()");
+}
 
-    //createInnerNode(iterator, node.id);
+function openBoard(cards){
+    document.getElementById(`pBrawlPosition0`).style.backgroundImage = "";
+    document.getElementById(`pBrawlPosition1`).style.backgroundImage = ""
+    document.getElementById(`pBrawlPosition2`).style.backgroundImage = "";
+    document.getElementById(`pBrawlPosition3`).style.backgroundImage = "";
+    document.getElementById(`pBrawlPosition4`).style.backgroundImage = "";
+    document.getElementById(`pBrawlPosition5`).style.backgroundImage = "";
+    document.getElementById(`pBrawlPosition6`).style.backgroundImage = "";
+
+
+    if(cards.one.slot !== "") document.getElementById(`pBrawlPosition${cards.one.slot}`).style.backgroundImage = `url(${cards.one.img})`;
+    if(cards.two.slot !== "") document.getElementById(`pBrawlPosition${cards.two.slot}`).style.backgroundImage = `url(${cards.two.img})`;
+    if(cards.three.slot !== "") document.getElementById(`pBrawlPosition${cards.three.slot}`).style.backgroundImage = `url(${cards.three.img})`;
+    if(cards.four.slot !== "") document.getElementById(`pBrawlPosition${cards.four.slot}`).style.backgroundImage = `url(${cards.four.img})`;
+    if(cards.five.slot !== "") document.getElementById(`pBrawlPosition${cards.five.slot}`).style.backgroundImage = `url(${cards.five.img})`;
+    if(cards.six.slot !== "") document.getElementById(`pBrawlPosition${cards.six.slot}`).style.backgroundImage = `url(${cards.six.img})`;
+    if(cards.seven.slot !== "") document.getElementById(`pBrawlPosition${cards.seven.slot}`).style.backgroundImage = `url(${cards.seven.img})`;
+
+    document.getElementById("pBrawlBoard").style.visibility = "visible";
+    document.getElementById("pBrawlBoard").style.opacity = "1";
+}
+
+function closeBoard(){
+    document.getElementById("pBrawlBoard").style.visibility = "hidden";
+    document.getElementById("pBrawlBoard").style.opacity = "0";
 }
 
 function removeAllChildNodes(parent) {
@@ -329,3 +366,15 @@ function removeAllChildNodes(parent) {
         parent.removeChild(parent.firstChild);
     }
 }
+
+function closeBrawl(){
+    ipcRenderer.send('resize-window');
+
+    for (let i = 2; i < 8; i++){
+        document.getElementById(`${i}`).setAttribute("onclick","changeWindow(this.id)");
+    }
+
+    document.getElementById(`pBrawlTooltip`).style.visibility = "hidden";
+    document.getElementById(`pBrawlTooltip`).style.opacity = "1";
+}
+

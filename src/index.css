@@ -163,3 +163,38 @@ body {
   display:flex;
   flex-direction: row;
 }
+
+#pBrawlBoard{
+  visibility: hidden;
+  width:600px;
+  height:200px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+
+  position:fixed;
+  right:350px;
+  bottom:275px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction: column;
+}
+
+.pBrawlRow{
+  display:flex;
+  flex-direction: row;
+  flex:auto;
+  width:100%;
+}
+.pBrawlRow div{
+  background-size: contain;
+  background-repeat: no-repeat;
+  flex:auto;
+  height:100%;
+  background-position:center;
+}
